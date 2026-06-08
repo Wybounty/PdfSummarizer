@@ -1,0 +1,136 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "data0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "15fb1e11-7af0-46dd-abba-a67a8a825740",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "38f4a0f2-4b6c-48ff-be0a-eaa6286d4fb2",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        64
+      ],
+      "id": "f16bc48b-3ccb-4682-b731-5f5c1ba7fd2c",
+      "name": "Webhook",
+      "webhookId": "38f4a0f2-4b6c-48ff-be0a-eaa6286d4fb2"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Tu es un assistant pédagogique expert dans l’analyse de cours PDF et la création de fiches de révision étudiantes.\n\nOBJECTIF :\nTransformer un document de cours en une fiche de révision moderne, claire, structurée et pédagogique afin d’aider un étudiant à comprendre rapidement les notions importantes du cours.\n\nLe document peut contenir :\n\n- cours\n- exercices\n- quiz\n- définitions\n- théories\n- tableaux\n- cas pratiques\n- exemples concrets\n- explications techniques\n\nRÈGLES GLOBALES :\n\n- écrire uniquement en français\n- être pédagogique et synthétique\n- simplifier les notions complexes\n- conserver les notions essentielles\n- éviter les répétitions\n- structurer les informations dans l’ordre logique du document\n- produire un contenu réellement utile pour la révision\n- mettre en avant les notions importantes\n- utiliser des phrases courtes et claires\n- ne jamais inventer d’informations absentes du document\n- ne jamais ajouter de texte hors du JSON\n\nCONTRAINTES TECHNIQUES :\n\n- retourner UNIQUEMENT un JSON valide\n- ne jamais utiliser markdown\n- ne jamais utiliser ```json\n- le premier caractère doit être {\n- le dernier caractère doit être }\n- toutes les listes doivent être des arrays JSON\n- aucune valeur null\n- aucune clé vide\n- aucun commentaire\n- aucun texte explicatif\n- JSON parfaitement compatible avec Laravel json_decode()\n\nIMPORTANT :\nLe contenu doit être suffisamment riche pour :\n\n- afficher une vraie fiche de révision moderne\n- générer un PDF stylisé\n- afficher une interface SaaS éducative premium\n\nANALYSE CE DOCUMENT :\n\n{{ $json.text }}\n\nRETOURNE EXACTEMENT CETTE STRUCTURE :\n\n{\n  \"presentation\": {\n    \"sujet\": \"\",\n    \"objectif\": \"\",\n    \"themes\": []\n  },\n\n  \"presentation_generale\": \"\",\n\n  \"notions_importantes\": [\n    {\n      \"titre\": \"\",\n      \"explication\": \"\",\n      \"importance\": \"\"\n    }\n  ],\n\n  \"points_cles\": [],\n\n  \"exemple_concret\": {\n    \"situation\": \"\",\n    \"probleme\": \"\",\n    \"solution\": \"\",\n    \"pourquoi_cette_solution\": \"\",\n    \"resultat\": \"\"\n  },\n\n  \"quiz\": [\n    {\n      \"question\": \"\",\n      \"reponse\": \"\"\n    }\n  ],\n\n  \"mots_cles\": [],\n\n  \"conclusion\": \"\"\n}\n\nRÈGLES MÉTIER IMPORTANTES :\n\n- \"presentation_generale\" :\n  doit être une présentation pédagogique complète du cours.\n  Elle doit permettre à l’étudiant de comprendre :\n  - le thème global\n  - les notions principales\n  - les concepts importants\n  - les enjeux du sujet\n  - la logique générale du document\n\n- \"notions_importantes\" :\n  IMPORTANT :\n  toutes les définitions importantes doivent être intégrées directement dans cette section.\n\n  Chaque notion doit :\n  - expliquer clairement le concept\n  - inclure les définitions importantes\n  - expliquer à quoi sert la notion\n  - donner du contexte pédagogique\n  - être réellement utile pour réviser\n\n  Les notions doivent être détaillées et pédagogiques.\n\n- \"importance\" doit être uniquement :\n  - \"faible\"\n  - \"moyenne\"\n  - \"élevée\"\n\n- \"points_cles\" :\n  doit contenir les idées essentielles du cours sous forme de phrases courtes.\n\n- \"exemple_concret\" :\n  IMPORTANT :\n  il doit y avoir UN SEUL exemple.\n\n  Cet exemple doit être :\n  - réaliste\n  - concret\n  - structuré\n  - pédagogique\n\n  L’objectif est de montrer comment appliquer réellement les notions du cours.\n\n  L’exemple doit expliquer :\n  - la situation de départ\n  - le problème rencontré\n  - la solution utilisée\n  - pourquoi cette solution est choisie\n  - le résultat obtenu\n\n  IMPORTANT :\n  éviter les exemples génériques ou vagues.\n\n  MAUVAIS EXEMPLE :\n  \"Une entreprise utilise cette méthode pour améliorer ses performances.\"\n\n  BON EXEMPLE :\n  \"Une entreprise souhaite lancer une application mobile.\n  Avant de commencer le développement, l’équipe utilise une analyse des besoins afin d’identifier les fonctionnalités essentielles demandées par les utilisateurs.\n  Cette méthode permet d’éviter les erreurs de conception et de mieux organiser les étapes du projet.\"\n\n- \"quiz\" :\n  doit contenir EXACTEMENT 5 questions.\n\n- les réponses du quiz doivent être détaillées, pédagogiques et utiles pour réviser\n\n- varier les types de questions :\n  - définition\n  - compréhension\n  - application\n  - réflexion\n  - cas concret\n\n- \"mots_cles\" :\n  doit contenir les termes importants du document.\n\n- \"conclusion\" :\n  obligatoire.\n  Elle doit résumer les enseignements principaux du cours en 2 à 5 phrases.\n\n- ne jamais produire un résumé générique\n\n- conserver les spécificités du document\n\n- conserver les concepts différenciants du cours\n\n- conserver les cas pratiques importants"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5ecfbacd-f9ce-4831-921e-85aaa422409c",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "5K0RExuijRl1QRn8",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.parse($json.output[0].content[0].text) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        768,
+        0
+      ],
+      "id": "61778df4-8eaa-4d67-91b8-244931ba2948",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f8924b82-bd61-4014-8c6c-047a3eefd06d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "99a647101811cdf85177646bf275114281335d7c57e2b92fd651e8fe9726fe29"
+  },
+  "id": "eEYKW0JW6msCoZIL",
+  "tags": []
+}
